@@ -1,4 +1,11 @@
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
+using StudentInfoAPI.Data;
+
+
+Log.Logger = new LoggerConfiguration().MinimumLevel.Debug().WriteTo.Console().CreateLogger();
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +19,12 @@ builder.Services.AddControllers(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
+builder.Services.AddTransient<FileExtensionContentTypeProvider>();
+
+builder.Services.AddDbContextPool<StudentInfoDbContext>(dbOptions =>
+{
+    dbOptions.UseSqlite(builder.Configuration["ConnectionStrings:StudentInfoSqliteDb"]);
+});
 
 var app = builder.Build();
 

@@ -15,6 +15,7 @@ namespace StudentInfoAPI.Controllers
             _fileContentTypeProvider = fileContentTypeProvider ?? 
                 throw new System.ArgumentException(nameof(fileContentTypeProvider));
         }
+
         [HttpGet]
         public ActionResult GetResultPDF()
         {
