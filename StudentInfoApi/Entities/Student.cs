@@ -1,6 +1,7 @@
 ﻿using StudentInfoAPI.DTOs;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace StudentInfoAPI.Entities;
 
@@ -20,4 +21,5 @@ public class Student
 
 
     public ICollection<CourseStudent> CourseStudent { get; set; } = new List<CourseStudent>();
+
 }

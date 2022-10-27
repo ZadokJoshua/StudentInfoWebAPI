@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using StudentInfoAPI.DTOs;
 using StudentInfoAPI.Entities;
 
 namespace StudentInfoAPI.Data
 {
-    public class StudentInfoDbContext : DbContext
+    public class StudentInfoDbContext : IdentityUserContext<IdentityUser>
     {
         public DbSet<Student> Students { get; set; } = null!;
         public DbSet<Course> Courses { get; set; } = null!;
@@ -17,6 +19,9 @@ namespace StudentInfoAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+
             modelBuilder.Entity<CourseStudent>()
                 .HasOne(s => s.Student)
                 .WithMany(cs => cs.CourseStudent)

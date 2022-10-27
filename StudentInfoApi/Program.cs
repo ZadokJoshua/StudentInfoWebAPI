@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -25,6 +26,17 @@ builder.Services.AddDbContextPool<StudentInfoDbContext>(dbOptions =>
 {
     dbOptions.UseSqlite(builder.Configuration["ConnectionStrings:StudentInfoSqliteDb"]);
 });
+
+builder.Services.AddIdentityCore<IdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+    options.User.RequireUniqueEmail = true;
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+}).AddEntityFrameworkStores<StudentInfoDbContext>();
 
 var app = builder.Build();
 
