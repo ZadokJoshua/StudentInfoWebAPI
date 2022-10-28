@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using StudentInfoAPI.DTOs;
 using StudentInfoAPI.Entities;
+using static StudentInfoAPI.Entities.UserApiKeys;
 
 namespace StudentInfoAPI.Data
 {
@@ -11,6 +12,7 @@ namespace StudentInfoAPI.Data
         public DbSet<Student> Students { get; set; } = null!;
         public DbSet<Course> Courses { get; set; } = null!;
         public DbSet<CourseStudent> CourseStudent { get; set; } = null!;
+        public DbSet<UserApiKey> UserApiKeys { get; set; } = null!;
 
         public StudentInfoDbContext(DbContextOptions<StudentInfoDbContext> options) : base(options)
         {

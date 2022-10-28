@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StudentInfoAPI.Data;
+using StudentInfoAPI.DTOs;
+using StudentInfoAPI.Entities;
 
 namespace StudentInfoAPI.Controllers
 {
@@ -7,15 +12,41 @@ namespace StudentInfoAPI.Controllers
     [Route("api/students")]
     public class StudentsController : ControllerBase
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        //[HttpGet]
-        //public ActionResult<IEnumerable<StudentDto>> GetStudents()
-        //{
-        //    return Ok(DataStore.Data.Students);
-        //}
+        private readonly StudentInfoDbContext _studentInfoDbContext;
+        private readonly ILogger<StudentsController> _logger;
+
+        public StudentsController(StudentInfoDbContext studentInfoDbContext, ILogger<StudentsController> logger)
+        {
+            _studentInfoDbContext = studentInfoDbContext;
+            _logger = logger;
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = $"{JwtBearerDefaults.AuthenticationScheme},ApiKey")]
+        public ActionResult<IEnumerable<Student>> GetStudents()
+        {
+            return Ok(new List<Student>
+            {
+                new Student()
+                {
+                    Id = 1,
+                    Name = "Zadok Joshua",
+                    MatricNumber = "2017/345"
+                },
+                new Student()
+                {
+                    Id = 2,
+                    Name = "Trinity Ikpe",
+                    MatricNumber = "2017/343"
+                },
+                new Student()
+                {
+                    Id = 3,
+                    Name = "James Sam",
+                    MatricNumber = "2017/343"
+                }
+            });
+        }
 
         ///// <summary>
         ///// 
